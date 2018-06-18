@@ -98,7 +98,7 @@ bool service_base::set_status(unsigned long state)
 void service_base::start(const std::vector<std::wstring> &serviceArguments)
 {
 	_serviceArguments = serviceArguments;
-	_logger.log_info(L"starting service " + _serviceName + L"...");
+	_logger.log_info(L"starting service \"" + _serviceName + L"\" ...");
 
 	if (!set_status(SERVICE_START_PENDING))
 	{
@@ -123,12 +123,12 @@ void service_base::start(const std::vector<std::wstring> &serviceArguments)
 		throw winapi_exception("set runnning status failed", lastError);
 	}
 
-	_logger.log_info(L"service " + _serviceName + L" started");
+	_logger.log_info(L"service \"" + _serviceName + L"\" started");
 }
 
 void service_base::stop()
 {
-	_logger.log_info(L"stopping service " + _serviceName + L"...");
+	_logger.log_info(L"stopping service \"" + _serviceName + L"\" ...");
 	set_status(SERVICE_STOP_PENDING);
 	::SetEvent(_stopEvent.get());
 	on_stop();
@@ -137,5 +137,5 @@ void service_base::stop()
 		_startFuture.wait();
 	}
 	set_status(SERVICE_STOPPED);
-	_logger.log_info(L"service " + _serviceName + L" stopped");
+	_logger.log_info(L"service \"" + _serviceName + L"\" stopped");
 }
