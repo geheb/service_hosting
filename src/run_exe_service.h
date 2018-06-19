@@ -16,7 +16,8 @@ private:
 
 	void on_start(const std::vector<std::wstring> &arguments, HANDLE stopEvent) override;
 
-	std::wstring _executeFile;
+	std::wstring _commandLine;
+	std::wstring _workingDirectory;
 	const environment &_env;
 };
 

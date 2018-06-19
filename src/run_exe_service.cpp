@@ -15,7 +15,9 @@ run_exe_service::run_exe_service(const environment &env, const configuration &co
 	: service_base(config.serviceName(), config.serviceDisplayName(), config.serviceDescription(), logger)
 	, _env(env)
 {
-	_executeFile = config.executeFile();
+	_commandLine = L"\"" + config.executable() + L"\" " + config.arguments();
+	size_t posDirChar = config.executable().find_last_of(L"\\/");
+	_workingDirectory = posDirChar != std::wstring::npos ? config.executable().substr(0, posDirChar) : env.currentDirectoryPath();
 }
 
 bool terminate_process_via_remote_thread(HANDLE targetProcessHandle, UINT exitCode, DWORD waitMilliseconds)
@@ -58,7 +60,8 @@ void run_exe_service::on_start(const std::vector<std::wstring> &serviceArguments
 	STARTUPINFO startInfo;
 	PROCESS_INFORMATION processInfo;
 	unique_handle processHandle;
-	std::wstring workingDirectory = _executeFile.substr(0, _executeFile.find_last_of(L"\\/"));
+
+	auto commandLine = unique_wchar_t(_wcsdup(_commandLine.c_str()));
 
 	while (true)
 	{
@@ -66,9 +69,9 @@ void run_exe_service::on_start(const std::vector<std::wstring> &serviceArguments
 		startInfo.cb = sizeof(startInfo);
 		::ZeroMemory(&processInfo, sizeof(processInfo));
 
-		if (!::CreateProcess(_executeFile.c_str(), nullptr, nullptr, nullptr, FALSE,
+		if (!::CreateProcess(nullptr, commandLine.get(), nullptr, nullptr, FALSE,
 			CREATE_NO_WINDOW | CREATE_UNICODE_ENVIRONMENT,
-			nullptr, workingDirectory.c_str(), &startInfo, &processInfo))
+			nullptr, _workingDirectory.c_str(), &startInfo, &processInfo))
 		{
 			_logger.log_error(L"create child process failed, " + winapi_error::create_message(::GetLastError()));
 			return;

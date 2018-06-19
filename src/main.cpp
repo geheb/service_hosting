@@ -14,7 +14,7 @@ int run(environment &env, event_logger &logger)
 {
 	configuration config(env);
 	config.load();
-    config.throwExceptionIfInvalid();
+	config.throwExceptionIfInvalid();
 	run_exe_service service(env, config, logger);
 
 	if (env.hasArguments() && env.hasConsoleWindow())
@@ -22,7 +22,7 @@ int run(environment &env, event_logger &logger)
 		if (env.hasArgument(L"--install"))
 		{
 			std::wcout << L"Installing service..." << std::endl;
-            service_installer(env).install(service);
+			service_installer(env).install(service);
 			logger.install();
 			std::wcout << L"Service installed." << std::endl;
 			return 0;
@@ -47,7 +47,7 @@ int run(environment &env, event_logger &logger)
 int _tmain(int argc, wchar_t* argv[])
 {
 	environment env(argc, argv);
-	event_logger logger(env, L"geheb.service_hosting");
+	event_logger logger(env, L"service_hosting");
 
 	try
 	{

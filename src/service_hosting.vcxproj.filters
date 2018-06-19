@@ -99,6 +99,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="geheb.service_hosting.json" />
+    <Text Include="service_hosting.json" />
   </ItemGroup>
 </Project>

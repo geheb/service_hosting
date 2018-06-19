@@ -72,3 +72,17 @@ struct hlocal_deleter
 };
 
 typedef std::unique_ptr<HLOCAL, hlocal_deleter> unique_hlocal;
+
+struct alloc_deleter
+{
+	typedef wchar_t* pointer;
+	void operator()(wchar_t* handle) const noexcept
+	{
+		if (handle != nullptr)
+		{
+			::free(handle);
+		}
+	}
+};
+
+typedef std::unique_ptr<wchar_t*, alloc_deleter> unique_wchar_t;

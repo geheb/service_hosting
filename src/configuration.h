@@ -11,21 +11,23 @@ public:
 	const std::wstring& serviceName() const { return _serviceName; }
 	const std::wstring& serviceDisplayName() const { return _serviceDisplayName; }
 	const std::wstring& serviceDescription() const { return _serviceDescription; }
-	const std::wstring& executeFile() const { return _executeFile; }
+	const std::wstring& executable() const { return _executable; }
+	const std::wstring& arguments() const { return _arguments; }
 
-    void throwExceptionIfInvalid()
-    {
-        if (_serviceName.empty() || _serviceDisplayName.empty() || _executeFile.empty())
-        {
-            throw std::runtime_error("config file geheb.service_hosting.json has invalid entries");
-        }
-    }
+	void throwExceptionIfInvalid()
+	{
+		if (_serviceName.empty() || _serviceDisplayName.empty() || _executable.empty())
+		{
+			throw std::runtime_error("config file service_hosting.json has invalid entries");
+		}
+	}
 
 private:
 	std::wstring _serviceName;
 	std::wstring _serviceDisplayName;
 	std::wstring _serviceDescription;
-	std::wstring _executeFile;
+	std::wstring _executable;
+	std::wstring _arguments;
 	const environment &_env;
 };
 

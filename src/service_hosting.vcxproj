@@ -22,7 +22,7 @@
     <ProjectGuid>{6E68D691-3CE0-4A4A-A4F5-08AD49AD4200}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>geheb</RootNamespace>
-    <ProjectName>geheb.service_hosting</ProjectName>
+    <ProjectName>service_hosting</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -202,7 +202,7 @@
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="geheb.service_hosting.json">
+    <Text Include="service_hosting.json">
       <FileType>Document</FileType>
     </Text>
   </ItemGroup>

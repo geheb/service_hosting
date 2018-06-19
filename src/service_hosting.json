@@ -2,5 +2,6 @@
   "service_name": "",
   "service_display_name": "",
   "service_description": "",
-  "execute_file": ""
+  "executable": "",
+  "arguments": ""
 }
