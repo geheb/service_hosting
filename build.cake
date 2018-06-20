@@ -35,9 +35,10 @@ Task("write-version")
 {
 	var version = System.Environment.GetEnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "1.0.0";
 	var file = File("./src/build_version.h");
+	var date = System.Environment.GetEnvironmentVariable("APPVEYOR") != null ? (DateTime.UtcNow.Month * 100 + DateTime.UtcNow.Day) : 0; 
 	System.IO.File.WriteAllText(file, "#pragma once\n");
-	System.IO.File.AppendAllText(file, $"#define BUILD_VERSION {version.Replace('.',',')}\n");
-	System.IO.File.AppendAllText(file, $"#define BUILD_VERSION_STR \"{version}\"\n");
+	System.IO.File.AppendAllText(file, $"#define BUILD_VERSION {version.Replace('.',',')},{date}\n");
+	System.IO.File.AppendAllText(file, $"#define BUILD_VERSION_STR \"{version}.{date}\"\n");
 	version = version.Substring(0, version.LastIndexOf('.'));
 	System.IO.File.AppendAllText(file, $"#define PRODUCT_VERSION {version.Replace('.',',')}\n");
 	System.IO.File.AppendAllText(file, $"#define PRODUCT_VERSION_STR \"{version}\"\n");
