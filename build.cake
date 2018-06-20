@@ -47,7 +47,7 @@ Task("build")
 	.IsDependentOn("clean")
 	.IsDependentOn("write-version")
 	.IsDependentOn("build-x86")
-	//.IsDependentOn("build-x64")
+	.IsDependentOn("build-x64")
 	.Does(() =>
 {
 });
